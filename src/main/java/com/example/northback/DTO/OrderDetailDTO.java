@@ -1,19 +1,16 @@
 package com.example.northback.DTO;
 
-import com.example.northback.entity.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductDTO {
-    private Long id;
+@AllArgsConstructor
+public class OrderDetailDTO {
     private String productName;
+    private Short quantity;
     private Double unitPrice;
-    private String supplierCompanyName;
-    private String categoryName;
 }

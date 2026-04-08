@@ -16,16 +16,24 @@ public class ProductService {
     public List<ProductDTO> listarProductos(){
         return repo.findAll()
                 .stream()
-                .map((p)-> new ProductDTO(p.getProductName(),p.getSupplier().getCompanyName(), p.getUnitPrice()))
+                .map((p)-> new ProductDTO(
+                        p.getId(),
+                        p.getProductName(),
+                        p.getUnitPrice(),
+                        p.getSupplier().getCompanyName(),
+                        p.getCategory().getCategoryName()))
                 .toList();
     }
 
     public ProductDTO productoPorId(Long id){
         Product p = repo.findById(id).orElseThrow(()-> new RuntimeException("Producto no encontrado") );
         return new ProductDTO(
+                p.getId(),
                 p.getProductName(),
+                p.getUnitPrice(),
                 p.getSupplier() !=null ? p.getSupplier().getCompanyName() :null,
-                p.getUnitPrice());
+                p.getCategory() != null ? p.getCategory().getCategoryName() : null
+                );
 
     }
 }

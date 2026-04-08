@@ -20,7 +20,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="supplierId")
     private Supplier supplier;//estoy diciendo esta columna puede tener un producto y muchas compañias abastecedoras
-    private Integer categoryId;
+    @ManyToOne
+    @JoinColumn(name="categoryId")
+    private Category category;
     private String quantityPerUnit;
     private Double unitPrice;
     private Short unitsInStock;
