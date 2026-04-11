@@ -41,8 +41,8 @@ public class SalesOrderService {
                     double subtotal  = d.getUnitPrice() *d.getQuantity() *(1-d.getDiscount());
                     return new OrderDetailDTO(
                             d.getProduct().getProductName(),
-                            d.getUnitPrice(),
                             d.getQuantity(),
+                            d.getUnitPrice(),
                             d.getDiscount(),
                             subtotal
                     );

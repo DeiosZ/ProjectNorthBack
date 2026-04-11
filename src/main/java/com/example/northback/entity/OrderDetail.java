@@ -22,7 +22,7 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name="productId")
     private Product product;
-    private Short unitPrice;
+    private Double unitPrice;
     private Short quantity;
     private Double discount;
 
