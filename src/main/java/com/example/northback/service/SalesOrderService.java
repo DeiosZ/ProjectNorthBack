@@ -5,6 +5,7 @@ import com.example.northback.entity.Customer;
 import com.example.northback.entity.Employee;
 import com.example.northback.entity.SalesOrder;
 import com.example.northback.repository.SalesOrderRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class SalesOrderService {
         );
     }
 
+    @Transactional
     public SalesOrderWithOrderDetailDTO ordenCompleta(Long id){
         SalesOrder s = repo.findById(id).orElseThrow(()->new RuntimeException("Orden no encontrada"));
         Customer c = s.getCustomer();
