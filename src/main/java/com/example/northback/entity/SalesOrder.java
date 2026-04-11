@@ -19,8 +19,12 @@ public class SalesOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="orderId")
     private Long id;
-    private Long custId;
-    private Long employeeId;
+    @ManyToOne
+    @JoinColumn(name="custId")
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name="employeeId")
+    private Employee employee;
     private LocalDateTime orderDate;
     private LocalDateTime requiredDate;
     private LocalDateTime shippedDate;

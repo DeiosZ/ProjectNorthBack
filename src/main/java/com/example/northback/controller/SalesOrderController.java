@@ -1,5 +1,7 @@
 package com.example.northback.controller;
 
+import com.example.northback.DTO.CustomerDTO;
+import com.example.northback.DTO.EmployeeDTO;
 import com.example.northback.DTO.SalesOrderDTO;
 import com.example.northback.DTO.SalesOrderWithOrderDetailDTO;
 import com.example.northback.service.SalesOrderService;
@@ -25,5 +27,14 @@ public class SalesOrderController {
     @GetMapping("/{id}")
     public SalesOrderWithOrderDetailDTO ordenCompleta(@PathVariable Long id){
         return service.ordenCompleta(id);
+    }
+
+    @GetMapping("/{id}/customer")
+    public CustomerDTO customerDeLaOrden(@PathVariable Long id){
+        return service.customerDeOrden(id);
+    }
+    @GetMapping("/{id}/empleado")
+    public EmployeeDTO empleadoDeLaOrden(@PathVariable Long id){
+        return service.obtenerEmpleadoDeOrden(id);
     }
 }

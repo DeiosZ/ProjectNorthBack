@@ -12,5 +12,7 @@ import lombok.Setter;
 public class OrderDetailDTO {
     private String productName;
     private Short quantity;
-    private Double unitPrice;
+    private Short unitPrice;
+    private Double discount;
+    private Double subtotal;
 }

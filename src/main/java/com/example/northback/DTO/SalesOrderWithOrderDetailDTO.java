@@ -15,5 +15,12 @@ public class SalesOrderWithOrderDetailDTO {
     private Long orderId;
     private LocalDateTime orderDate;
     private LocalDateTime requiredDate;
+    private String customerName;
+    private String customerContact;
+    private String employeeName;
+    private String shipAddress;
+    private String shipCity;
+    private String shipCountry;
     private List<OrderDetailDTO> details;
+    private Double total;
 }

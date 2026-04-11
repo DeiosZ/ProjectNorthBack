@@ -1,8 +1,8 @@
 package com.example.northback.service;
 
-import com.example.northback.DTO.OrderDetailDTO;
-import com.example.northback.DTO.SalesOrderDTO;
-import com.example.northback.DTO.SalesOrderWithOrderDetailDTO;
+import com.example.northback.DTO.*;
+import com.example.northback.entity.Customer;
+import com.example.northback.entity.Employee;
 import com.example.northback.entity.SalesOrder;
 import com.example.northback.repository.SalesOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +33,68 @@ public class SalesOrderService {
 
     public SalesOrderWithOrderDetailDTO ordenCompleta(Long id){
         SalesOrder s = repo.findById(id).orElseThrow(()->new RuntimeException("Orden no encontrada"));
-        return new SalesOrderWithOrderDetailDTO(
+        Customer c = s.getCustomer();
+        Employee e = s.getEmployee();
+        List<OrderDetailDTO> detalles  = s.getDetails()
+                .stream()
+                .map(d->{
+                    double subtotal  = d.getUnitPrice() *d.getQuantity() *(1-d.getDiscount());
+                    return new OrderDetailDTO(
+                            d.getProduct().getProductName(),
+                            d.getUnitPrice(),
+                            d.getQuantity(),
+                            d.getDiscount(),
+                            subtotal
+                    );
+                })
+                .toList();
+        double total = detalles.stream()
+                .mapToDouble(OrderDetailDTO::getSubtotal)
+                .sum();
+
+        return  new SalesOrderWithOrderDetailDTO(
                 s.getId(),
                 s.getOrderDate(),
                 s.getRequiredDate(),
-                s.getDetails()
-                        .stream()
-                        .map(d-> new OrderDetailDTO(
-                                d.getProduct().getProductName(),
-                                d.getQuantity(),
-                                d.getUnitPrice()
-                        ))
-                        .toList()
-
+                c.getCompanyName(),
+                c.getContactName(),
+                e.getFirstname()+" "+e.getLastname(),
+                s.getShipAddress(),
+                s.getShipCity(),
+                s.getShipCountry(),
+                detalles,
+                total
         );
     }
 
+
+    public CustomerDTO customerDeOrden(Long id) {
+        SalesOrder order = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        Customer c = order.getCustomer();
+
+        return new CustomerDTO(
+                c.getId(),
+                c.getCompanyName(),
+                c.getContactName(),
+                c.getPhone(),
+                c.getEmail()
+        );
+    }
+
+    public EmployeeDTO obtenerEmpleadoDeOrden(Long orderId) {
+        SalesOrder order = repo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        Employee e = order.getEmployee();
+
+        return new EmployeeDTO(
+                e.getId(),
+                e.getLastname(),
+                e.getFirstname(),
+                e.getTitle(),
+                e.getEmail()
+        );
+    }
 }
