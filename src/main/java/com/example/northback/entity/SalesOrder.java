@@ -36,6 +36,6 @@ public class SalesOrder {
     private String shipPostalCode;
     private String shipCountry;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL ,orphanRemoval = true)
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL ,orphanRemoval = true,fetch = FetchType.EAGER)
     private List<OrderDetail> details;
 }
